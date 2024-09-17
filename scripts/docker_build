@@ -1,2 +1,2 @@
 #!/bin/bash
-docker build -t interface21/openwms-configuration:latest .
+docker build -t openleap/openleap-config:latest .

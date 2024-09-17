@@ -6,22 +6,22 @@ Parameters:
   RepositoryName:
     Description: GitHub repository name
     Type: String
-    Default: org.openwms.configuration
+    Default: io.openleap.config
   GitHubOwner:
     Type: String
-    Default: spring-labs
+    Default: openleap-io
   GitHubOAuthToken:
     Type: String
     Default: ${GHTOKEN}
     NoEcho: true
   ApplicationName:
-    Description: OpenWMS.org CORE Configuration Server
+    Description: OpenLeap.io CORE Configuration Server
     Type: String
-    Default: openwms-configuration
+    Default: openleap-config
   DeployDev:
-    Description: OpenWMS.org DEVELOPMENT Environment
+    Description: OpenLeap.io    DEVELOPMENT Environment
     Type: String
-    Default: openwms-configuration-DEVELOPMENT
+    Default: openleap-config-DEVELOPMENT
 
 Resources:
 

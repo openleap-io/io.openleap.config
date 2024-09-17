@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: owms-config
+  name: owleap-config
   labels:
-    app: owms-config
+    app: oleap-config
 spec:
   type: LoadBalancer
   ports:
@@ -11,4 +11,4 @@ spec:
     protocol: TCP
     targetPort: 8099
   selector:
-    app: owms-config
+    app: oleap-config

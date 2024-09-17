@@ -1,2 +1,2 @@
 #!/bin/bash
-docker build -t interface21/openwms-configuration:$VERSION-$GITHUB_RUN_NUMBER .
+docker build -t openleap/openleap-config:$VERSION-$GITHUB_RUN_NUMBER .
