@@ -6,7 +6,7 @@ Parameters:
   RepositoryName:
     Description: GitHub repository name
     Type: String
-    Default: org.openwms.configuration
+    Default: io.openleap.config
   GitHubOwner:
     Type: String
     Default: spring-labs
