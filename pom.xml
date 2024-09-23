@@ -4,11 +4,11 @@
     <parent>
         <groupId>io.openleap</groupId>
         <artifactId>io.openleap.parent</artifactId>
-        <version>46</version>
+        <version>47</version>
         <relativePath />
     </parent>
     <artifactId>io.openleap.config</artifactId>
-    <version>1.0.6-SNAPSHOT</version>
+    <version>1.0.7-SNAPSHOT</version>
     <name>OpenLeap.io CORE: Configuration Service</name>
     <description>A configuration service that provides arbitrary configuration parameters for microservices at a central place</description>
     <url>https://github.com/openleap-io/${project.artifactId}</url>
