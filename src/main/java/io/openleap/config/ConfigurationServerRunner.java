@@ -30,7 +30,7 @@ import org.springframework.context.annotation.Bean;
  *
  * @author Heiko Scherrer
  */
-@SpringBootApplication(scanBasePackageClasses = SolutionApp.class, scanBasePackages = "org.openwms")
+@SpringBootApplication(scanBasePackageClasses = SolutionApp.class, scanBasePackages = "io.openleap")
 @EnableConfigServer
 @EnableDiscoveryClient
 public class ConfigurationServerRunner {
