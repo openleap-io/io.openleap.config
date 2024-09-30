@@ -4,12 +4,12 @@
     <parent>
         <groupId>io.openleap</groupId>
         <artifactId>io.openleap.parent</artifactId>
-        <version>47</version>
+        <version>48</version>
         <relativePath />
     </parent>
     <artifactId>io.openleap.config</artifactId>
-    <version>1.0.7-SNAPSHOT</version>
-    <name>OpenLeap.io CORE: Configuration Service</name>
+    <version>1.0.8-SNAPSHOT</version>
+    <name>OpenLeap.io: Configuration Service</name>
     <description>A configuration service that provides arbitrary configuration parameters for microservices at a central place</description>
     <url>https://github.com/openleap-io/${project.artifactId}</url>
 
@@ -78,18 +78,6 @@
         </notifiers>
     </ciManagement>
 
-    <properties>
-        <spring-cloud-dependencies.version>2023.0.3</spring-cloud-dependencies.version>
-        <woodstox-core.version>7.0.0</woodstox-core.version>
-        <guava.version>33.3.0-jre</guava.version>
-        <jersey-core>1.19.4</jersey-core>
-        <jersey-client>1.19.1</jersey-client>
-        <httpclient.version>4.5.14</httpclient.version>
-        <servo-core.version>0.13.2</servo-core.version>
-        <hk2-api.version>3.1.1</hk2-api.version>
-        <spectator-api.version>1.7.3</spectator-api.version>
-        
-    </properties>
 
     <reporting>
         <plugins>
@@ -138,70 +126,6 @@
             </plugin>
         </plugins>
     </build>
-
-    <dependencyManagement>
-        <dependencies>
-            <!-- Resolution of dependency convergence errors -->
-            <dependency>
-                <!-- org.springframework.cloud:spring-cloud-starter-netflix-eureka-server -->
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava</artifactId>
-                <version>${guava.version}</version>
-            </dependency>
-            <dependency>
-                <!-- org.springframework.cloud:spring-cloud-netflix-eureka-server -->
-                <groupId>com.sun.jersey</groupId>
-                <artifactId>jersey-core</artifactId>
-                <version>${jersey-core.version}</version>
-            </dependency>
-            <dependency>
-                <!-- org.springframework.cloud:spring-cloud-starter-netflix-eureka-server -->
-                <groupId>org.apache.httpcomponents</groupId>
-                <artifactId>httpclient</artifactId>
-                <version>${httpclient.version}</version>
-            </dependency>
-            <dependency>
-                <!-- org.springframework.cloud:spring-cloud-netflix-eureka-server -->
-                <groupId>com.sun.jersey</groupId>
-                <artifactId>jersey-client</artifactId>
-                <version>${jersey-client.version}</version>
-            </dependency>
-            <dependency>
-                <!-- org.springframework.cloud:spring-cloud-starter-netflix-eureka-server -->
-                <groupId>com.fasterxml.woodstox</groupId>
-                <artifactId>woodstox-core</artifactId>
-                <version>${woodstox-core.version}</version>
-            </dependency>
-            <dependency>
-                <!-- org.springframework.cloud:spring-cloud-starter-netflix-eureka-server -->
-                <groupId>com.netflix.servo</groupId>
-                <artifactId>servo-core</artifactId>
-                <version>${servo-core.version}</version>
-            </dependency>
-            <dependency>
-                <!-- org.springframework.cloud:spring-cloud-starter-netflix-eureka-server -->
-                <groupId>org.glassfish.hk2</groupId>
-                <artifactId>hk2-api</artifactId>
-                <version>${hk2-api.version}</version>
-            </dependency>
-            <dependency>
-                <!-- org.springframework.cloud:spring-cloud-starter-netflix-eureka-server -->
-                <groupId>com.netflix.spectator</groupId>
-                <artifactId>spectator-api</artifactId>
-                <version>${spectator-api.version}</version>
-            </dependency>
-             
-            <!-- End of resolution of dependency convergence errors -->
-             <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud-dependencies.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-           
-        </dependencies>
-    </dependencyManagement>
 
     <dependencies>
         <!-- Spring Dependencies -->
