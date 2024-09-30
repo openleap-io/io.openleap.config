@@ -11,26 +11,6 @@
     <version>1.0.8-SNAPSHOT</version>
     <name>OpenLeap.io: Configuration Service</name>
     <description>A configuration service that provides arbitrary configuration parameters for microservices at a central place</description>
-    <url>https://github.com/openleap-io/${project.artifactId}</url>
-
-    <issueManagement>
-        <system>GitHub</system>
-        <url>https://github.com/openleap-io/${project.artifactId}/issues</url>
-    </issueManagement>
-
-    <distributionManagement>
-        <site>
-            <id>site</id>
-            <url>scm:git:git@github.com:openleap-io/${project.artifactId}.git</url>
-        </site>
-    </distributionManagement>
-
-    <scm>
-        <url>https://github.com/openleap-io/${project.artifactId}</url>
-        <connection>scm:git:https://${scmuser}github.com/openleap-io/${project.artifactId}.git</connection>
-        <developerConnection>scm:git:https://${scmuser}github.com/openleap-io/${project.artifactId}.git</developerConnection>
-        <tag>HEAD</tag>
-  </scm>
 
     <developers>
         <developer>
