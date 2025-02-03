@@ -1,18 +1,30 @@
+server:
+  port: ${PORT:8099}
+
 spring:
   application:
     name: openleap-config
-  cloud:
-    config:
-      server:
-        git:
-          uri: https://github.com/openleap-io/io.openleap.config
-          search-paths: conf
-          clone-on-start: true
-          default-label: master
   security:
     user:
       password: sa
       name: user
+  cloud:
+    config:
+      server:
+        git:
+          uri: git@github.com:openleap-io/io.openleap.config-repo.git
+          force-pull: true
+          search-paths: config
+          clone-on-start: true
+          username: ${SSH_USERNAME:your_username}
+          password: ${SSH_PASSWORD:your_password}
+          default-label: main
+encrypt:
+  keyStore:
+    location: classpath:/server.jks
+    password: letmein
+    alias: mytestkey
+    secret: letmein
 
 health:
   config:
@@ -25,9 +37,6 @@ oleap:
   srv:
     protocol: http
     hostname: localhost
-
-server:
-  port: ${PORT:8099}
 
 eureka:
   client:

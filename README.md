@@ -17,13 +17,61 @@ $ java -Dspring.profiles.active=native \
 -jar target/openleap-config-exec.jar
 ```
 
-In this example the configuration server will look for configuration files in a directory named "myconf" within the current directory.
+By default, the configuration server listens on port `8099` and exposes the configuration files under the `/config` path that are part of the repository `https://github.com/openleap-io/io.openleap.config-repo`
 
-Git Repository:
+To fetch the configuration files from a Git repository, the following configuration is required:
+
+In the [application.yml](src/main/resources/application.yml) set the
+```yaml
+username: ${SSH_USERNAME:your_username}
+password: ${SSH_PASSWORD:your_password}
 ```
-$ ./mvnw package
-$ java -Dspring.cloud.config.server.git.uri=https://github.com/openleap-io/org.openwms.zile \
--jar target/openwms-configuration-exec.jar
+This is your ssh username and password for your public key you are using to access the git repository.
+
+Note: if there are issues related the ssh key make sure you have the git repo added to your known_hosts file at the top.
+
+### Key generation and encryption of sensitive information
+Currently, there is a default server.jks.
+
+To create new key use the command:
+```shell
+keytool -genkeypair -alias mytestkey -keyalg RSA -dname "CN=Web Server,OU=Unit,O=Organization,L=City,S=State,C=US" -keypass letmein -keystore server.jks -storepass letmein
+```
+and then update the [application.yml](src/main/resources/application.yml) with the following:
+```yaml
+encrypt:
+  keyStore:
+    location: classpath:/server.jks
+    password: letmein
+    alias: mytestkey
+    secret: letmein
+```
+
+To add new sensitive information to the configuration files, use the following command:
+
+Make a request to:
+```shell
+curl -i -X POST --data-urlencode some_secret_password http://user:sa@localhost:8099/encrypt
+```
+and in the response, you will get the encrypted value.
+```shell
+HTTP/1.1 200
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Type: text/plain;charset=UTF-8
+Content-Length: 580
+Date: Mon, 03 Feb 2025 16:31:13 GMT
+
+AYC+btjcE+8zVcdTPXnwfIxs4bLyYKAJwxMcb66F48keDAP1BAhAFx5KqwMiJq5w0viQieq2Em8mlX6z+/wAkgmYN+qJ9LLTPT6qE5ftuF1vz8CYJf2o5NxbyV6CB/gobtcpijhadKeQc9Gj3nNs7ghhleEQuFd8qDyg8Kp0hbciTacZi8HvUYLZFP6jltwUFa4qKwoUs0EGie95T900+kaMvtJkZFKBCiVlLRSBZbb9gEUh+B/OOuwEmSrZ8z8bKyU91/2m5TVLhL06P9TBvJk59iZbv3oIgQNvhdexGoK+UOAZ/WTcimHHbLiKh6lUKSiXceyt5qaUnu4FyloO7XOm4LS0xDN0WJW6bHmGgiTBSYYwvX0dN5b2SjwaSCOCK8ujE3rzQ7+l4a9vx3wOb96H60Q98gqvhCtsh2W5dyteh/w7U9jFBDIzpAJsNM2AaCoccMAUChsKRyT9ZtGr4rR67RUZY10Jun5phcN8+NISL74w/AVU/Lg90TuQnTRZ2FJE2s0dpHYvimmdTGA/CrH21qwZMSt3mmswOZONwxl+BdSLkKT4ZRW8FEFl2GN9tEI=%
+```
+
+Add the encrypted value to the coresponding configuration file with a prefix {cipher}:
+```yaml
+some_sensitive_property: '{chiper}AYC+btjcE+8zVcdTPXnwfIxs4bLyYKAJwxMcb66F48keDAP1BAhAFx5KqwMiJq5w0viQieq2Em8mlX6z+/wAkgmYN+qJ9LLTPT6qE5ftuF1vz8CYJf2o5NxbyV6CB/gobtcpijhadKeQc9Gj3nNs7ghhleEQuFd8qDyg8Kp0hbciTacZi8HvUYLZFP6jltwUFa4qKwoUs0EGie95T900+kaMvtJkZFKBCiVlLRSBZbb9gEUh+B/OOuwEmSrZ8z8bKyU91/2m5TVLhL06P9TBvJk59iZbv3oIgQNvhdexGoK+UOAZ/WTcimHHbLiKh6lUKSiXceyt5qaUnu4FyloO7XOm4LS0xDN0WJW6bHmGgiTBSYYwvX0dN5b2SjwaSCOCK8ujE3rzQ7+l4a9vx3wOb96H60Q98gqvhCtsh2W5dyteh/w7U9jFBDIzpAJsNM2AaCoccMAUChsKRyT9ZtGr4rR67RUZY10Jun5phcN8+NISL74w/AVU/Lg90TuQnTRZ2FJE2s0dpHYvimmdTGA/CrH21qwZMSt3mmswOZONwxl+BdSLkKT4ZRW8FEFl2GN9tEI='
 ```
 
 # Run as Docker Container
