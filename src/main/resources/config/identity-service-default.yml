@@ -1,0 +1,82 @@
+server:
+  port: 0
+
+spring:
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost:5432}/${POSTGRES_DATABASE:identitydb}
+    username: ${POSTGRES_USERNAME:postgres}
+    password: ${POSTGRES_PASSWORD:postgres}
+  liquibase:
+    enabled: ${ENABLE_LIQUIBASE:true}
+    change-log: classpath:changelog/changelog-${LIQUIBASE_ENV:prod}.xml
+  application:
+    name: IDENTITY-SERVICE
+  http:
+    multipart:
+      enabled: false
+  servlet:
+    multipart:
+      enabled: false
+      max-file-size: 1GB
+      max-request-size: 1GB
+  h2:
+    console:
+      settings:
+        web-admin-password:
+          eureka:
+            url: http://user:sa@localhost:8761
+            zone: ${oleap.eureka.url}/eureka/
+          srv:
+            hostname: localhost
+            protocol: http
+      enabled: true
+
+oleap:
+  instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  eureka:
+    url: http://user:sa@localhost:8761
+    zone: ${oleap.eureka.url}/eureka/
+  srv:
+    hostname: localhost
+    protocol: http
+
+eureka:
+  client:
+    instance-info-replication-interval-seconds: 10 # default is 30
+    registryFetchIntervalSeconds: 5 # SBA
+    service-url:
+      defaultZone: ${oleap.eureka.zone} # Must be camelCase
+  instance:
+    instance-id: ${oleap.instance-id}
+    health-check-url-path: /actuator/health
+    hostname: ${oleap.srv.hostname}
+    # Request a lease with a validity of 5 seconds. If until then the
+    # lease has not been renewed, it expires and the Eureka server can evict it.
+    # Default: 90s
+    lease-expiration-duration-in-seconds: 5
+
+    # The cadence of lease renewal, i.e. how often a heartbeat is sent to Eureka server.
+    # In this case every 2 seconds. Use this only for development / debugging. In production use the ...
+    # Default: 30s
+    lease-renewal-interval-in-seconds:    2
+    metadata-map:
+      config-protocol: http # The protocol used to access the config server
+      username: ${spring.security.user.name}
+      password: ${spring.security.user.password}
+      protocol: ${oleap.srv.protocol}
+      zone: ${oleap.eureka.zone}
+    non-secure-port-enabled: true
+    prefer-ip-address: true
+    secure-port-enabled: false
+#    statusPageUrl: ${oleap.srv.protocol}://${oleap.srv.hostname}:${server.port}/actuator/info
+#    healthCheckUrl: ${oleap.srv.protocol}://${oleap.srv.hostname}:${server.port}/actuator/health
+#    homePageUrl: ${oleap.srv.protocol}://${oleap.srv.hostname}:${server.port}/
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+
