@@ -80,3 +80,10 @@ management:
         include: "*"
 
 
+logging:
+  level:
+    root: INFO
+    io.openleap: DEBUG
+#    org.springframework.web: INFO
+#    org.springframework.security: TRACE
+#    org.springframework.security.oauth2: TRACE

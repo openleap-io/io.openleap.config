@@ -41,7 +41,6 @@ oleap:
     protocol: http
   client:
     registration:
-      instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
       registration-endpoint: http://auth-server:8899/connect/register
       unregistration-endpoint: http://auth-server:8899/internal/client/unregister
       registration-username: register-client
@@ -58,6 +57,7 @@ eureka:
     service-url:
       defaultZone: ${oleap.eureka.zone} # Must be camelCase
   instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
     health-check-url-path: /actuator/health
     hostname: ${oleap.srv.hostname}
     # Request a lease with a validity of 5 seconds. If until then the
@@ -90,6 +90,7 @@ management:
 logging:
   level:
     root: INFO
+    io.openleap: DEBUG
 #    org.springframework.web: INFO
 #    org.springframework.security: TRACE
 #    org.springframework.security.oauth2: TRACE
