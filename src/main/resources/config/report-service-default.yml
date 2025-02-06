@@ -1,5 +1,5 @@
 server:
-  port: 0
+  port: ${PORT:0}
 
 spring:
   application:
@@ -19,29 +19,29 @@ spring:
               - profile
         provider:
           spring:
-            issuer-uri: http://auth-server:8899
-            token-uri: http://auth-server:8899/oauth2/token
+            issuer-uri: ${AUTH_SERVER_ISSUER_URL:http://auth-server:8899}
+            token-uri: ${AUTH_SERVER_TOKEN_URL:http://auth-server:8899/oauth2/token}
       resourceserver:
         jwt:
-          jwk-set-uri: http://auth-server:8899/oauth2/jwks
+          jwk-set-uri: ${AUTH_SERVER_JWK_URL:http://auth-server:8899/oauth2/jwks}
 
 oleap:
   eureka:
-    url: http://user:sa@localhost:8761
+    url: ${oleap.srv.protocol}://${spring.security.user.name}:${spring.security.user.password}@${oleap.srv.hostname}:${oleap.srv.port}
     zone: ${oleap.eureka.url}/eureka/
   srv:
-    hostname: localhost
-    protocol: http
+    protocol: ${REGISTRY_PROTOCOL:http}
+    hostname: ${REGISTRY_HOSTNAME:localhost}
+    port: ${REGISTRY_PORT:8761}
   client:
     registration:
-      registration-endpoint: http://auth-server:8899/connect/register
-      unregistration-endpoint: http://auth-server:8899/internal/client/unregister
-      registration-username: register-client
-      registration-password: '{cipher}AYB0nR3JLJnGBr4PB4+dANkLEtF/BLQUViEMtU4HQdfYHdAEuWuVI7Z3WzLFUOtMC4M4QDrkbhmmk/RI1zJvCYgSE4teFV3AmbxsKrHm/65LHhUR7NQgMU2sAsxg3gYMBocKJnEpV+PCODs4uRd2h9cLJPDroYkT+JknpnjJ3+LVU/HbmKR/41+hUWGQ4uwrax/+kGSb0VGPzehQhHHRMwrDvgqzf9JrxQaCYmhxqSRlGC3iBc/4mjUtj+TGyTSm371hF5rYhLym2oham43k8BWCTyg/36p+3jCfJt8tzx5++8zswB7Is6aEKGWQMtDCRmBS5G7n0zgSzq3dWpjgS65XCt7qoIKZv6jnopbl/gwgDa2AmIbNYVp1lXXkkt0/H0kkbFjTSz7kzmyyH4kTDUtmxuUwNpRoX85AxL0xChgLH+9G77lssmn7w7r/pdlTiv+ZghUsJHRwtEWDXuYD9fV5W0EbkoZdHNW6V0SnwS0SnVGmvbmB2AdxNCJAd4NLV4SE5gPRhvOpb5dCVUtTITwSAFqEhB0MQFPsD1CKHc28aA=='
-      token-endpoint: http://auth-server:8899/oauth2/token
-      registration-scopes: client.create
-      grant-types: client_credentials
-      base-url: http://${spring.application.name}
+      registration-endpoint: ${AUTH_REGISTRATION_URL:http://auth-server:8899/connect/register}
+      registration-username:  ${AUTH_REGISTRATION_USERNAME:register-client}
+      registration-password: ${AUTH_REGISTRATION_PASSWORD:'{cipher}AYB0nR3JLJnGBr4PB4+dANkLEtF/BLQUViEMtU4HQdfYHdAEuWuVI7Z3WzLFUOtMC4M4QDrkbhmmk/RI1zJvCYgSE4teFV3AmbxsKrHm/65LHhUR7NQgMU2sAsxg3gYMBocKJnEpV+PCODs4uRd2h9cLJPDroYkT+JknpnjJ3+LVU/HbmKR/41+hUWGQ4uwrax/+kGSb0VGPzehQhHHRMwrDvgqzf9JrxQaCYmhxqSRlGC3iBc/4mjUtj+TGyTSm371hF5rYhLym2oham43k8BWCTyg/36p+3jCfJt8tzx5++8zswB7Is6aEKGWQMtDCRmBS5G7n0zgSzq3dWpjgS65XCt7qoIKZv6jnopbl/gwgDa2AmIbNYVp1lXXkkt0/H0kkbFjTSz7kzmyyH4kTDUtmxuUwNpRoX85AxL0xChgLH+9G77lssmn7w7r/pdlTiv+ZghUsJHRwtEWDXuYD9fV5W0EbkoZdHNW6V0SnwS0SnVGmvbmB2AdxNCJAd4NLV4SE5gPRhvOpb5dCVUtTITwSAFqEhB0MQFPsD1CKHc28aA=='}
+      token-endpoint: ${AUTH_REGISTRATION_TOKEN_URL:http://auth-server:8899/oauth2/token}
+      registration-scopes: ${AUTH_REGISTRATION_SCOPES:client.create}
+      grant-types: ${AUTH_REGISTRATION_GRANTTYPE:client_credentials}
+      base-url: ${GATEWAY_BASE_URL:http://127.0.0.1:8086}
 
 eureka:
   client:

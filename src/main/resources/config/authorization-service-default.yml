@@ -1,5 +1,5 @@
 server:
-  port: 8899
+  port: ${PORT:8899}
 spring:
   application:
     name: AUTHORIZATION-SERVICE
@@ -27,11 +27,12 @@ springdoc:
 
 oleap:
   eureka:
-    url: http://user:sa@localhost:8761
+    url: ${oleap.srv.protocol}://${spring.security.user.name}:${spring.security.user.password}@${oleap.srv.hostname}:${oleap.srv.port}
     zone: ${oleap.eureka.url}/eureka/
   srv:
-    hostname: localhost
-    protocol: http
+    protocol: ${REGISTRY_PROTOCOL:http}
+    hostname: ${REGISTRY_HOSTNAME:localhost}
+    port: ${REGISTRY_PORT:8761}
 management:
   endpoints:
     web:

@@ -27,28 +27,28 @@ spring:
             client-name: gateway-client
         provider:
           spring:
-            issuer-uri: http://auth-server:8899
-            token-uri: http://auth-server:8899/oauth2/token
+            issuer-uri: ${AUTH_SERVER_ISSUER_URL:http://auth-server:8899}
+            token-uri: ${AUTH_SERVER_TOKEN_URL:http://auth-server:8899/oauth2/token}
         resourceserver:
           jwt:
-            jwk-set-uri: http://auth-server:8899/oauth2/jwks
+            jwk-set-uri: ${AUTH_SERVER_JWK_URL:http://auth-server:8899/oauth2/jwks}
 oleap:
   eureka:
-    url: http://user:sa@localhost:8761
+    url: ${oleap.srv.protocol}://${spring.security.user.name}:${spring.security.user.password}@${oleap.srv.hostname}:${oleap.srv.port}
     zone: ${oleap.eureka.url}/eureka/
   srv:
-    hostname: localhost
-    protocol: http
+    protocol: ${REGISTRY_PROTOCOL:http}
+    hostname: ${REGISTRY_HOSTNAME:localhost}
+    port: ${REGISTRY_PORT:8761}
   client:
     registration:
-      registration-endpoint: http://auth-server:8899/connect/register
-      unregistration-endpoint: http://auth-server:8899/internal/client/unregister
-      registration-username: register-client
-      registration-password: secret
-      token-endpoint: http://auth-server:8899/oauth2/token
-      registration-scopes: client.create
-      grant-types: client_credentials
-      base-url: http://127.0.0.1:8086
+      registration-endpoint: ${AUTH_REGISTRATION_URL:http://auth-server:8899/connect/register}
+      registration-username:  ${AUTH_REGISTRATION_USERNAME:register-client}
+      registration-password: ${AUTH_REGISTRATION_PASSWORD:secret}
+      token-endpoint: ${AUTH_REGISTRATION_TOKEN_URL:http://auth-server:8899/oauth2/token}
+      registration-scopes: ${AUTH_REGISTRATION_SCOPES:client.create}
+      grant-types: ${AUTH_REGISTRATION_GRANTTYPE:client_credentials}
+      base-url: ${GATEWAY_BASE_URL:http://127.0.0.1:8086}
 
 eureka:
   client:
