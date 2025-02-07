@@ -3,11 +3,11 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://database:5432/identitydb
+    url: 'jdbc:postgresql://database:5432/identitydb'
     username: postgres
     password: postgres
   liquibase:
-    enabled: true
+    enabled: 'true'
     change-log: classpath:changelog/changelog-prod.xml
   application:
     name: IDENTITY-SERVICE
@@ -24,7 +24,7 @@ spring:
       settings:
         web-admin-password:
           eureka:
-            url: ${oleap.srv.protocol}://${spring.security.user.name}:${spring.security.user.password}@${oleap.srv.hostname}:${oleap.srv.port}
+            url: ${oleap.srv.protocol}://${oleap.srv.user.name}:${oleap.srv.user.password}@${oleap.srv.hostname}:${oleap.srv.port}
             zone: ${oleap.eureka.url}/eureka/
           srv:
             hostname: ${REGISTRY_PROTOCOL:http}
@@ -35,12 +35,15 @@ spring:
 oleap:
   instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
   eureka:
-    url: ${oleap.srv.protocol}://${spring.security.user.name}:${spring.security.user.password}@${oleap.srv.hostname}:${oleap.srv.port}
+    url: ${oleap.srv.protocol}://${oleap.srv.user.name}:${oleap.srv.user.password}@${oleap.srv.hostname}:${oleap.srv.port}
     zone: ${oleap.eureka.url}/eureka/
   srv:
     protocol: ${REGISTRY_PROTOCOL:http}
     hostname: ${REGISTRY_HOSTNAME:localhost}
     port: ${REGISTRY_PORT:8761}
+    user:
+      name: ${REGISTRY_USER:user}
+      password: ${REGISTRY_PASSWORD:sa}
 
 eureka:
   client:
@@ -63,8 +66,8 @@ eureka:
     lease-renewal-interval-in-seconds:    2
     metadata-map:
       config-protocol: http # The protocol used to access the config server
-      username: ${spring.security.user.name}
-      password: ${spring.security.user.password}
+      username: ${srv.user.name}
+      password: ${srv.user.password}
       protocol: ${oleap.srv.protocol}
       zone: ${oleap.eureka.zone}
     non-secure-port-enabled: true
