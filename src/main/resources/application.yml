@@ -34,12 +34,15 @@ health:
 
 oleap:
   eureka:
-    url: ${oleap.srv.protocol}://${spring.security.user.name}:${spring.security.user.password}@${oleap.srv.hostname}:${oleap.srv.port}
+    url: ${oleap.srv.protocol}://${oleap.srv.user.name}:${oleap.srv.user.password}@${oleap.srv.hostname}:${oleap.srv.port}
     zone: ${oleap.eureka.url}/eureka/
   srv:
     protocol: ${REGISTRY_PROTOCOL:http}
     hostname: ${REGISTRY_HOSTNAME:localhost}
     port: ${REGISTRY_PORT:8761}
+    user:
+      name: user
+      password: sa
 
 eureka:
   client:
