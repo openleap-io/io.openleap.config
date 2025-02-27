@@ -1,32 +1,32 @@
 server:
-  port: ${PORT:8099}
+  port: 8099
 
 spring:
   profiles:
-   active: ${SPRING_PROFILES_ACTIVE:native}
+   active: native
   application:
     name: openleap-config
   security:
     user:
-      name: ${REGISTRY_USER:user}
-      password: ${REGISTRY_PASSWORD:sa}
+      name: user
+      password: sa
   cloud:
     config:
       server:
         git:
-          uri: ${CONFIG_GIT_URL:git@github.com:openleap-io/io.openleap.config-repo.git}
+          uri: git@github.com:openleap-io/io.openleap.config-repo.git
           force-pull: true
-          search-paths: ${CONFIG_SEARCH_PATH:config}
+          search-paths: config
           clone-on-start: true
-          username: ${CONFIG_SSH_USERNAME:your_username}
-          password: ${CONFIG_SSH_PASSWORD:your_password}
+          username: your_username
+          password: your_password
           default-label: main
 encrypt:
   keyStore:
-    location: ${CONFIG_KEY_STORE_LOCATION:classpath:/server.jks}
-    password: ${CONFIG_KEY_STORE_PASSWORD:letmein}
-    alias: ${CONFIG_KEY_STORE_ALIAS:mytestkey}
-    secret: ${CONFIG_KEY_STORE_SECRET:letmein}
+    location: classpath:/server.jks
+    password: letmein
+    alias: mytestkey
+    secret: letmein
 
 health:
   config:
@@ -37,9 +37,9 @@ oleap:
     url: ${oleap.srv.protocol}://${oleap.srv.user.name}:${oleap.srv.user.password}@${oleap.srv.hostname}:${oleap.srv.port}
     zone: ${oleap.eureka.url}/eureka/
   srv:
-    protocol: ${REGISTRY_PROTOCOL:http}
-    hostname: ${REGISTRY_HOSTNAME:localhost}
-    port: ${REGISTRY_PORT:8761}
+    protocol: http
+    hostname: localhost
+    port: 8761
     user:
       name: user
       password: sa
@@ -70,15 +70,3 @@ logging:
   file:
     name: BOOT-CORE-Config.log
     path: "/tmp/oleap"
-
----
-spring:
-  config:
-    activate:
-      on-profile: native
-  cloud:
-    config:
-      server:
-        native:
-          search-locations: classpath:config/
-        bootstrap: true
