@@ -51,11 +51,8 @@ To add new sensitive information to the configuration files, use the following c
 
 Make a request to:
 ```shell
-curl -i -X POST --data-urlencode some_secret_password http://user:sa@localhost:8099/encrypt
-```
-and in the response, you will get the encrypted value.
-```shell
-HTTP/1.1 200
+curl -i -X POST -H "Authorization: Basic dXNlcjpzYQ==" localhost:8098/encrypt -s -d kire
+HTTP/1.1 200 
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 0
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
@@ -63,15 +60,32 @@ Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
 Content-Type: text/plain;charset=UTF-8
-Content-Length: 580
-Date: Mon, 03 Feb 2025 16:31:13 GMT
+Content-Length: 560
+Date: Sat, 02 Aug 2025 11:39:57 GMT
 
-AYC+btjcE+8zVcdTPXnwfIxs4bLyYKAJwxMcb66F48keDAP1BAhAFx5KqwMiJq5w0viQieq2Em8mlX6z+/wAkgmYN+qJ9LLTPT6qE5ftuF1vz8CYJf2o5NxbyV6CB/gobtcpijhadKeQc9Gj3nNs7ghhleEQuFd8qDyg8Kp0hbciTacZi8HvUYLZFP6jltwUFa4qKwoUs0EGie95T900+kaMvtJkZFKBCiVlLRSBZbb9gEUh+B/OOuwEmSrZ8z8bKyU91/2m5TVLhL06P9TBvJk59iZbv3oIgQNvhdexGoK+UOAZ/WTcimHHbLiKh6lUKSiXceyt5qaUnu4FyloO7XOm4LS0xDN0WJW6bHmGgiTBSYYwvX0dN5b2SjwaSCOCK8ujE3rzQ7+l4a9vx3wOb96H60Q98gqvhCtsh2W5dyteh/w7U9jFBDIzpAJsNM2AaCoccMAUChsKRyT9ZtGr4rR67RUZY10Jun5phcN8+NISL74w/AVU/Lg90TuQnTRZ2FJE2s0dpHYvimmdTGA/CrH21qwZMSt3mmswOZONwxl+BdSLkKT4ZRW8FEFl2GN9tEI=%
+AYCP0CkK9KMb/uzd/xubkVJClCETY1yJIqAHtK6XkE2CHkohU4VUwTox0yQO1cvYrRMp3ddEGl4f4+BVLLHimhLfXKxmlp0lcxOehKPhDEAKiKVDfDKtKWAisdbmL9vv9XbCmv0nFHPfAUJpVYSo6XC8YLh0if37T2jlcfErbOAyPRFdWwEDuk9I6XjozQgL3HlSBN5Ti09SrjNn8/6czH4dv6wCy7w6a1uREqN8IUWtFYwD5nwhbpGRddtjQM9Pgp86RgsEOxhbYDuc6OH7OatwZnmSJX//2fBn/bjKfNGEt/C0eQr9HA9YT7xwhwe66n3DmrA888RAF0SZritQRQUgxOWRHj1wZ6IKMs29FRLGc8Z4uJKwWlpT/yG7cfzpYOeNfijma9f7NTDaNvjAJauTashst1CvxzHPfzpa4fJ9zsZwZFVbcyC/jndtIv4tslfn22q66KF0WAwVdm/jOvJoFGH+bOQkjQu13dMlgMUCPbg2jCSTUeNYzCThLy3S6jQrm24pXfjPaTFVnVYcsPfeUN5xxpvPqTciDKdojwEfGw==
+```
+To decrypt the value, use the following command (url encode the data):
+```shell
+curl -i -X POST -H "Authorization: Basic dXNlcjpzYQ==" localhost:8098/decrypt -s -d AYCP0CkK9KMb%2Fuzd%2FxubkVJClCETY1yJIqAHtK6XkE2CHkohU4VUwTox0yQO1cvYrRMp3ddEGl4f4%2BBVLLHimhLfXKxmlp0lcxOehKPhDEAKiKVDfDKtKWAisdbmL9vv9XbCmv0nFHPfAUJpVYSo6XC8YLh0if37T2jlcfErbOAyPRFdWwEDuk9I6XjozQgL3HlSBN5Ti09SrjNn8%2F6czH4dv6wCy7w6a1uREqN8IUWtFYwD5nwhbpGRddtjQM9Pgp86RgsEOxhbYDuc6OH7OatwZnmSJX%2F%2F2fBn%2FbjKfNGEt%2FC0eQr9HA9YT7xwhwe66n3DmrA888RAF0SZritQRQUgxOWRHj1wZ6IKMs29FRLGc8Z4uJKwWlpT%2FyG7cfzpYOeNfijma9f7NTDaNvjAJauTashst1CvxzHPfzpa4fJ9zsZwZFVbcyC%2FjndtIv4tslfn22q66KF0WAwVdm%2FjOvJoFGH%2BbOQkjQu13dMlgMUCPbg2jCSTUeNYzCThLy3S6jQrm24pXfjPaTFVnVYcsPfeUN5xxpvPqTciDKdojwEfGw%3D%3D
+HTTP/1.1 200 
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 0
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Type: text/plain;charset=UTF-8
+Content-Length: 4
+Date: Sat, 02 Aug 2025 12:00:32 GMT
+
+kire
+
 ```
 
 Add the encrypted value to the coresponding configuration file with a prefix {cipher}:
 ```yaml
-some_sensitive_property: '{chiper}AYC+btjcE+8zVcdTPXnwfIxs4bLyYKAJwxMcb66F48keDAP1BAhAFx5KqwMiJq5w0viQieq2Em8mlX6z+/wAkgmYN+qJ9LLTPT6qE5ftuF1vz8CYJf2o5NxbyV6CB/gobtcpijhadKeQc9Gj3nNs7ghhleEQuFd8qDyg8Kp0hbciTacZi8HvUYLZFP6jltwUFa4qKwoUs0EGie95T900+kaMvtJkZFKBCiVlLRSBZbb9gEUh+B/OOuwEmSrZ8z8bKyU91/2m5TVLhL06P9TBvJk59iZbv3oIgQNvhdexGoK+UOAZ/WTcimHHbLiKh6lUKSiXceyt5qaUnu4FyloO7XOm4LS0xDN0WJW6bHmGgiTBSYYwvX0dN5b2SjwaSCOCK8ujE3rzQ7+l4a9vx3wOb96H60Q98gqvhCtsh2W5dyteh/w7U9jFBDIzpAJsNM2AaCoccMAUChsKRyT9ZtGr4rR67RUZY10Jun5phcN8+NISL74w/AVU/Lg90TuQnTRZ2FJE2s0dpHYvimmdTGA/CrH21qwZMSt3mmswOZONwxl+BdSLkKT4ZRW8FEFl2GN9tEI='
+some_sensitive_property: '{cipher}AYC+btjcE+8zVcdTPXnwfIxs4bLyYKAJwxMcb66F48keDAP1BAhAFx5KqwMiJq5w0viQieq2Em8mlX6z+/wAkgmYN+qJ9LLTPT6qE5ftuF1vz8CYJf2o5NxbyV6CB/gobtcpijhadKeQc9Gj3nNs7ghhleEQuFd8qDyg8Kp0hbciTacZi8HvUYLZFP6jltwUFa4qKwoUs0EGie95T900+kaMvtJkZFKBCiVlLRSBZbb9gEUh+B/OOuwEmSrZ8z8bKyU91/2m5TVLhL06P9TBvJk59iZbv3oIgQNvhdexGoK+UOAZ/WTcimHHbLiKh6lUKSiXceyt5qaUnu4FyloO7XOm4LS0xDN0WJW6bHmGgiTBSYYwvX0dN5b2SjwaSCOCK8ujE3rzQ7+l4a9vx3wOb96H60Q98gqvhCtsh2W5dyteh/w7U9jFBDIzpAJsNM2AaCoccMAUChsKRyT9ZtGr4rR67RUZY10Jun5phcN8+NISL74w/AVU/Lg90TuQnTRZ2FJE2s0dpHYvimmdTGA/CrH21qwZMSt3mmswOZONwxl+BdSLkKT4ZRW8FEFl2GN9tEI='
 ```
 
 # Run as Docker Container
