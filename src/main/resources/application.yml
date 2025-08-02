@@ -14,12 +14,12 @@ spring:
     config:
       server:
         git:
-          uri: ${CONFIG_SERVER_URL:git@github.com:openleap-io/io.openleap.config-repo.git}
+          uri: ${CONFIG_SERVER_GIT_URL:git@github.com:openleap-io/io.openleap.config-repo.git}
           force-pull: true
           search-paths: config
           clone-on-start: true
-          username: ${SSH_USERNAME:your_username}
-          password: ${SSH_PASSWORD:your_password}
+          username: ${CONFIG_SERVER_GIT_USERNAME:your_username}
+          password: ${CONFIG_SERVER_GIT_PASSWORD:your_password}
           default-label: main
 encrypt:
   keyStore:
